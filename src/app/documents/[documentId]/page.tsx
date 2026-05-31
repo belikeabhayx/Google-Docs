@@ -1,9 +1,16 @@
-import React from 'react'
+import Editor from "./editor";
 
-const page = () => {
-  return (
-    <div>page</div>
-  )
+interface DocumentIdProps {
+  params: Promise<{ documentId: string }>;
 }
 
-export default page
+const page = async ({ params }: DocumentIdProps) => {
+  const { documentId } = await params;
+  return (
+    <div className="min-h-screen bg-[#FAFBFD]">
+      <Editor />
+    </div>
+  );
+};
+
+export default page;
