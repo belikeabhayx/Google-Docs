@@ -3,7 +3,12 @@
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { TaskItem, TaskList } from "@tiptap/extension-list";
-import { Table, TableCell, TableHeader, TableRow } from "@tiptap/extension-table";
+import {
+  Table,
+  TableCell,
+  TableHeader,
+  TableRow,
+} from "@tiptap/extension-table";
 import Image from "@tiptap/extension-image";
 
 const Editor = () => {
@@ -17,7 +22,15 @@ const Editor = () => {
     },
     extensions: [
       StarterKit,
-      Image,
+      Image.configure({
+        resize: {
+          enabled: true,
+          directions: ["top", "bottom", "left", "right"], // can be any direction or diagonal combination
+          minWidth: 50,
+          minHeight: 50,
+          alwaysPreserveAspectRatio: true,
+        },
+      }),
       Table,
       TableCell,
       TableHeader,
