@@ -1,11 +1,15 @@
 "use client";
+import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { useEditorStore } from "@/store/use-editor-store";
 import {
+  BoldIcon,
+  ItalicIcon,
   LucideIcon,
   PrinterIcon,
   Redo2Icon,
   SpellCheckIcon,
+  UnderlineIcon,
   Undo2Icon,
 } from "lucide-react";
 
@@ -72,11 +76,35 @@ export const Toolbar = () => {
         },
       },
     ],
+    [
+      {
+        label: "Bold",
+        icon: BoldIcon,
+        isActive: editor?.isActive("bold"),
+        onClick: () => editor?.chain().focus().toggleBold().run(),
+      },
+      {
+        label: "Italic",
+        icon: ItalicIcon,
+        isActive: editor?.isActive("italic"),
+        onClick: () => editor?.chain().focus().toggleItalic().run(),
+      },
+      {
+        label: "Underline",
+        icon: UnderlineIcon,
+        isActive: editor?.isActive("underline"),
+        onClick: () => editor?.chain().focus().toggleUnderline().run(),
+      },
+    ],
   ];
 
   return (
-    <div className="bg-[#F1F4F9] px-2.5 py-0.5 rounded-[24px] min-h-[40px] fkex items-center gap-x-0.5">
+    <div className="bg-[#F1F4F9] px-2.5 py-0.5 rounded-[24px] min-h-[40px] flex items-center gap-x-0.5">
       {sections[0].map((item) => (
+        <ToolbarButton key={item.label} {...item} />
+      ))}
+      <Separator orientation="vertical" className="h-6 bg-neutral-300" />
+      {sections[1].map((item) => (
         <ToolbarButton key={item.label} {...item} />
       ))}
     </div>
