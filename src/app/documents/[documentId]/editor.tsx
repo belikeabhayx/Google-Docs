@@ -11,6 +11,8 @@ import {
 } from "@tiptap/extension-table";
 import Image from "@tiptap/extension-image";
 import { useEditorStore } from "@/store/use-editor-store";
+import FontFamily from "@tiptap/extension-font-family";
+import { TextStyle } from "@tiptap/extension-text-style";
 
 const Editor = () => {
   const { setEditor } = useEditorStore();
@@ -49,6 +51,8 @@ const Editor = () => {
     },
     extensions: [
       StarterKit,
+      FontFamily,
+      TextStyle,
       Image.configure({
         resize: {
           enabled: true,
