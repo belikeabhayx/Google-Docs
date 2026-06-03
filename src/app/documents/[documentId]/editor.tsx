@@ -12,7 +12,9 @@ import {
 import Image from "@tiptap/extension-image";
 import { useEditorStore } from "@/store/use-editor-store";
 import FontFamily from "@tiptap/extension-font-family";
-import { TextStyle } from "@tiptap/extension-text-style";
+import { Color, TextStyle } from "@tiptap/extension-text-style";
+import Highlight from "@tiptap/extension-highlight";
+import Link from "@tiptap/extension-link";
 
 const Editor = () => {
   const { setEditor } = useEditorStore();
@@ -51,6 +53,15 @@ const Editor = () => {
     },
     extensions: [
       StarterKit,
+      Color,
+      Highlight.configure({
+        multicolor: true,
+      }),
+      Link.configure({
+        openOnClick: false,
+        autolink: true,
+        defaultProtocol: "https",
+      }),
       FontFamily,
       TextStyle,
       Image.configure({
