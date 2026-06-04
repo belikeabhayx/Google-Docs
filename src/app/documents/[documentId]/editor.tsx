@@ -2,21 +2,24 @@
 
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { TaskItem, TaskList } from "@tiptap/extension-list";
-import {
-  Table,
-  TableCell,
-  TableHeader,
-  TableRow,
-} from "@tiptap/extension-table";
+import TaskItem from "@tiptap/extension-task-item";
+import TaskList from "@tiptap/extension-task-list";
+import Table from "@tiptap/extension-table";
+import TableCell from "@tiptap/extension-table-cell";
+import TableHeader from "@tiptap/extension-table-header";
+import TableRow from "@tiptap/extension-table-row";
 import Image from "@tiptap/extension-image";
 import { useEditorStore } from "@/store/use-editor-store";
 import FontFamily from "@tiptap/extension-font-family";
-import { Color, TextStyle } from "@tiptap/extension-text-style";
+import { Color } from "@tiptap/extension-color";
+import { TextStyle } from "@tiptap/extension-text-style";
 import Highlight from "@tiptap/extension-highlight";
 import Link from "@tiptap/extension-link";
 import { FontSizeExtensions } from "@/extensions/font-size";
 import { LineHeightExtension } from "@/extensions/line-height";
+import ImageResize from "tiptap-extension-resize-image";
+import Underline from "@tiptap/extension-underline";
+import TextAlign from "@tiptap/extension-text-align";
 import { Ruler } from "./ruler";
 
 const Editor = () => {
@@ -56,47 +59,44 @@ const Editor = () => {
       },
     },
     extensions: [
-      StarterKit,
+      StarterKit.configure({
+        history: false,
+      }),
+      Table,
+      TableCell,
+      TableHeader,
+      TableRow,
+      TaskList,
+      Image,
+      ImageResize,
+      Underline,
+      FontFamily,
+      TextStyle,
       Color,
-      Highlight.configure({
-        multicolor: true,
+      LineHeightExtension.configure({
+        types: ["heading", "paragraph"],
+        defaultLineHeight: "1.5",
+      }),
+      FontSizeExtensions,
+      TextAlign.configure({
+        types: ["heading", "paragraph"],
       }),
       Link.configure({
         openOnClick: false,
         autolink: true,
         defaultProtocol: "https",
       }),
-      FontSizeExtensions,
-      LineHeightExtension.configure({
-        types: ["heading", "paragraph"],
-        defaultLineHeight: "1.5",
+      Highlight.configure({
+        multicolor: true,
       }),
-      FontFamily,
-      TextStyle,
-      Image.configure({
-        resize: {
-          enabled: true,
-          directions: ["top", "bottom", "left", "right"], // can be any direction or diagonal combination
-          minWidth: 50,
-          minHeight: 50,
-          alwaysPreserveAspectRatio: true,
-        },
-      }),
-      Table,
-      TableCell,
-      TableHeader,
-      TableRow,
-      TaskItem.configure({
-        nested: true,
-      }),
-      TaskList,
+      TaskItem.configure({ nested: true }),
     ],
     content: "<p>Hello World!</p>",
   });
 
   return (
     <div className="size-full overflow-x-auto bg-[#F9FBFD] px-4 print:p-0 print:bg-white print:overflow-visible">
-      <Ruler/>
+      <Ruler />
       <div className="mix-w-max flex justify-center w-[816px] py-4 print:py-0 mx-auto print:w-full print:min-w-0">
         <EditorContent editor={editor} />
       </div>
