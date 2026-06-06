@@ -1,10 +1,10 @@
 "use client";
 import { usePaginatedQuery, useQuery } from "convex/react";
 import { Navbar } from "./navbar";
-import TemplateGallery from "./templates/templates-gallery";
 import { api } from "../../../convex/_generated/api";
 import { DocumentsTable } from "./documents-table";
 import { useSearchParam } from "@/hooks/use-search-param";
+import { TemplatesGallery } from "./templates/templates-gallery";
 
 const Home = () => {
   const [search] = useSearchParam();
@@ -20,7 +20,7 @@ const Home = () => {
         <Navbar />
       </div>
       <div className="mt-16">
-        <TemplateGallery />
+        <TemplatesGallery />
         <DocumentsTable
           documents={results}
           loadMore={loadMore}

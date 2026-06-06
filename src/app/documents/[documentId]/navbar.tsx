@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { DocumentInput } from "./document-input";
@@ -40,8 +40,14 @@ import {
 } from "lucide-react";
 import editor from "./editor";
 import { useEditorStore } from "@/store/use-editor-store";
+import { OrganizationSwitcher, UserButton } from "@clerk/nextjs";
+import { toast } from "sonner";
+import { useMutation } from "convex/react";
+import { api } from "../../../../convex/_generated/api";
+import { useRouter } from "next/navigation";
 
 export const Navbar = () => {
+  const router = useRouter();
   const { editor } = useEditorStore();
   const insertTable = ({ rows, cols }: { rows: number; cols: number }) => {
     editor
@@ -51,6 +57,7 @@ export const Navbar = () => {
       .run();
   };
 
+  const mutation = useMutation(api.documents.create);
   const onNewDocument = () => {
     mutation({
       title: "Untitled Document",
@@ -278,6 +285,15 @@ export const Navbar = () => {
             </Menubar>
           </div>
         </div>
+      </div>
+      <div className="flex gap-3 items-center pl-6">
+        <OrganizationSwitcher
+          afterCreateOrganizationUrl="/"
+          afterLeaveOrganizationUrl="/"
+          afterSelectOrganizationUrl="/"
+          afterSelectPersonalUrl="/"
+        />
+        <UserButton />
       </div>
     </nav>
   );
