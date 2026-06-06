@@ -21,8 +21,10 @@ import ImageResize from "tiptap-extension-resize-image";
 import Underline from "@tiptap/extension-underline";
 import TextAlign from "@tiptap/extension-text-align";
 import { Ruler } from "./ruler";
+import { useLiveblocksExtension } from "@liveblocks/react-tiptap";
 
 const Editor = () => {
+  const liveblocks = useLiveblocksExtension();
   const { setEditor } = useEditorStore();
 
   const editor = useEditor({
@@ -59,6 +61,7 @@ const Editor = () => {
       },
     },
     extensions: [
+      liveblocks,
       StarterKit.configure({
         history: false,
       }),
