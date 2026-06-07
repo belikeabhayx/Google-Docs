@@ -1,23 +1,8 @@
 "use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import { DocumentInput } from "./document-input";
-import {
-  Menubar,
-  MenubarCheckboxItem,
-  MenubarContent,
-  MenubarGroup,
-  MenubarItem,
-  MenubarMenu,
-  MenubarRadioGroup,
-  MenubarRadioItem,
-  MenubarSeparator,
-  MenubarShortcut,
-  MenubarSub,
-  MenubarSubContent,
-  MenubarSubTrigger,
-  MenubarTrigger,
-} from "@/components/ui/menubar";
+
 // icons
 import { BsFilePdf } from "react-icons/bs";
 import {
@@ -38,24 +23,41 @@ import {
   UnderlineIcon,
   Undo2Icon,
 } from "lucide-react";
-import editor from "./editor";
+
+import { RenameDialog } from "@/components/rename-dialog";
+// import { RemoveDialog } from "@/components/remove-dialog";
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarSeparator,
+  MenubarShortcut,
+  MenubarSub,
+  MenubarSubContent,
+  MenubarSubTrigger,
+  MenubarTrigger,
+} from "@/components/ui/menubar";
+
+import { Avatars } from "./avatars";
+
+import { DocumentInput } from "./document-input";
 import { useEditorStore } from "@/store/use-editor-store";
 import { OrganizationSwitcher, UserButton } from "@clerk/nextjs";
-import { toast } from "sonner";
+import { Inbox } from "./inbox";
+import { Doc } from "../../../../convex/_generated/dataModel";
 import { useMutation } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
-export const Navbar = () => {
+interface NavbarProps {
+  data: Doc<"documents">;
+}
+
+export const Navbar = ({ data }: NavbarProps) => {
   const router = useRouter();
   const { editor } = useEditorStore();
-  const insertTable = ({ rows, cols }: { rows: number; cols: number }) => {
-    editor
-      ?.chain()
-      .focus()
-      .insertTable({ rows, cols, withHeaderRow: false })
-      .run();
-  };
 
   const mutation = useMutation(api.documents.create);
   const onNewDocument = () => {
@@ -68,6 +70,14 @@ export const Navbar = () => {
         toast.success("Document created");
         router.push(`/documents/${id}`);
       });
+  };
+
+  const insertTable = ({ rows, cols }: { rows: number; cols: number }) => {
+    editor
+      ?.chain()
+      .focus()
+      .insertTable({ rows, cols, withHeaderRow: false })
+      .run();
   };
 
   const onDownload = (blob: Blob, filename: string) => {
@@ -85,7 +95,7 @@ export const Navbar = () => {
     const blob = new Blob([JSON.stringify(content)], {
       type: "application/json",
     });
-    onDownload(blob, `document.json`);
+    onDownload(blob, `${data.title}.json`);
   };
 
   const onSaveHTML = () => {
@@ -95,7 +105,7 @@ export const Navbar = () => {
     const blob = new Blob([content], {
       type: "text/html",
     });
-    onDownload(blob, `document.title}.html`);
+    onDownload(blob, `${data.title}.html`);
   };
 
   const onSaveText = () => {
@@ -105,7 +115,7 @@ export const Navbar = () => {
     const blob = new Blob([content], {
       type: "text/plain",
     });
-    onDownload(blob, `document.title}.txt`);
+    onDownload(blob, `${data.title}.txt`);
   };
 
   return (
@@ -115,7 +125,7 @@ export const Navbar = () => {
           <Image src={"/logo.svg"} alt="logo" width={36} height={36} />
         </Link>
         <div className="flex flex-col">
-          <DocumentInput />
+          <DocumentInput title={data.title} id={data._id} />
           <div className="flex">
             <Menubar className="border-none bg-transparent shadow-none h-auto p-0">
               <MenubarMenu>
@@ -151,7 +161,7 @@ export const Navbar = () => {
                     New Document
                   </MenubarItem>
                   <MenubarSeparator />
-                  {/* <RenameDialog documentId={data._id} initialTitle={data.title}>
+                  <RenameDialog documentId={data._id} initialTitle={data.title}>
                     <MenubarItem
                       onClick={(e) => e.stopPropagation()}
                       onSelect={(e) => e.preventDefault()}
@@ -159,7 +169,7 @@ export const Navbar = () => {
                       <FilePenIcon className="mr-2 size-4" />
                       Rename
                     </MenubarItem>
-                  </RenameDialog> */}
+                  </RenameDialog>
                   {/* <RemoveDialog documentId={data._id}>
                     <MenubarItem
                       onClick={(e) => e.stopPropagation()}
@@ -287,6 +297,8 @@ export const Navbar = () => {
         </div>
       </div>
       <div className="flex gap-3 items-center pl-6">
+        <Avatars />
+        <Inbox />
         <OrganizationSwitcher
           afterCreateOrganizationUrl="/"
           afterLeaveOrganizationUrl="/"
