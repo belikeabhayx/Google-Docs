@@ -73,11 +73,7 @@ export const Navbar = ({ data }: NavbarProps) => {
   };
 
   const insertTable = ({ rows, cols }: { rows: number; cols: number }) => {
-    editor
-      ?.chain()
-      .focus()
-      .insertTable({ rows, cols, withHeaderRow: false })
-      .run();
+    editor?.chain().focus().insertTable({ rows, cols, withHeaderRow: false }).run();
   };
 
   const onDownload = (blob: Blob, filename: string) => {
@@ -191,15 +187,11 @@ export const Navbar = ({ data }: NavbarProps) => {
                   Edit
                 </MenubarTrigger>
                 <MenubarContent>
-                  <MenubarItem
-                    onClick={() => editor?.chain().focus().undo().run()}
-                  >
+                  <MenubarItem onClick={() => editor?.chain().focus().undo().run()}>
                     <Undo2Icon className="mr-2 size-4" />
                     Undo <MenubarShortcut>&#x2318; + Z</MenubarShortcut>
                   </MenubarItem>
-                  <MenubarItem
-                    onClick={() => editor?.chain().focus().redo().run()}
-                  >
+                  <MenubarItem onClick={() => editor?.chain().focus().redo().run()}>
                     <Redo2Icon className="mr-2 size-4" />
                     Redo <MenubarShortcut>&#x2318; + Y</MenubarShortcut>
                   </MenubarItem>
@@ -213,24 +205,16 @@ export const Navbar = ({ data }: NavbarProps) => {
                   <MenubarSub>
                     <MenubarSubTrigger>Table</MenubarSubTrigger>
                     <MenubarSubContent>
-                      <MenubarItem
-                        onClick={() => insertTable({ rows: 1, cols: 1 })}
-                      >
+                      <MenubarItem onClick={() => insertTable({ rows: 1, cols: 1 })}>
                         1 x 1
                       </MenubarItem>
-                      <MenubarItem
-                        onClick={() => insertTable({ rows: 2, cols: 2 })}
-                      >
+                      <MenubarItem onClick={() => insertTable({ rows: 2, cols: 2 })}>
                         2 x 2
                       </MenubarItem>
-                      <MenubarItem
-                        onClick={() => insertTable({ rows: 4, cols: 4 })}
-                      >
+                      <MenubarItem onClick={() => insertTable({ rows: 4, cols: 4 })}>
                         4 x 4
                       </MenubarItem>
-                      <MenubarItem
-                        onClick={() => insertTable({ rows: 4, cols: 6 })}
-                      >
+                      <MenubarItem onClick={() => insertTable({ rows: 4, cols: 6 })}>
                         4 x 6
                       </MenubarItem>
                     </MenubarSubContent>
@@ -248,45 +232,25 @@ export const Navbar = ({ data }: NavbarProps) => {
                       Text
                     </MenubarSubTrigger>
                     <MenubarSubContent>
-                      <MenubarItem
-                        onClick={() =>
-                          editor?.chain().focus().toggleBold().run()
-                        }
-                      >
+                      <MenubarItem onClick={() => editor?.chain().focus().toggleBold().run()}>
                         <BoldIcon className="size-4 mr-2" />
                         Bold
                       </MenubarItem>
-                      <MenubarItem
-                        onClick={() =>
-                          editor?.chain().focus().toggleItalic().run()
-                        }
-                      >
+                      <MenubarItem onClick={() => editor?.chain().focus().toggleItalic().run()}>
                         <ItalicIcon className="size-4 mr-2" />
                         Italic
                       </MenubarItem>
-                      <MenubarItem
-                        onClick={() =>
-                          editor?.chain().focus().toggleUnderline().run()
-                        }
-                      >
+                      <MenubarItem onClick={() => editor?.chain().focus().toggleUnderline().run()}>
                         <UnderlineIcon className="size-4 mr-2" />
                         Underline
                       </MenubarItem>
-                      <MenubarItem
-                        onClick={() =>
-                          editor?.chain().focus().toggleStrike().run()
-                        }
-                      >
+                      <MenubarItem onClick={() => editor?.chain().focus().toggleStrike().run()}>
                         <StrikethroughIcon className="size-4 mr-2" />
                         Strikethrough
                       </MenubarItem>
                     </MenubarSubContent>
                   </MenubarSub>
-                  <MenubarItem
-                    onClick={() =>
-                      editor?.chain().focus().unsetAllMarks().run()
-                    }
-                  >
+                  <MenubarItem onClick={() => editor?.chain().focus().unsetAllMarks().run()}>
                     <RemoveFormattingIcon className="size-4 mr-2" />
                     Clear formatting
                   </MenubarItem>

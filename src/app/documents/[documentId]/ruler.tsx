@@ -7,14 +7,12 @@ import { RIGHT_MARGIN_DEFAULT, LEFT_MARGIN_DEFAULT } from "@/constants/margins";
 const markers = Array.from({ length: 83 }, (_, i) => i);
 
 export const Ruler = () => {
-  const leftMargin =
-    useStorage((root) => root.leftMargin) ?? LEFT_MARGIN_DEFAULT;
+  const leftMargin = useStorage((root) => root.leftMargin) ?? LEFT_MARGIN_DEFAULT;
   const setLeftMargin = useMutation(({ storage }, position: number) => {
     storage.set("leftMargin", position);
   }, []);
 
-  const rightMargin =
-    useStorage((root) => root.rightMargin) ?? RIGHT_MARGIN_DEFAULT;
+  const rightMargin = useStorage((root) => root.rightMargin) ?? RIGHT_MARGIN_DEFAULT;
   const setRightMargin = useMutation(({ storage }, position: number) => {
     storage.set("rightMargin", position);
   }, []);
@@ -49,10 +47,7 @@ export const Ruler = () => {
         } else if (isDraggingRight) {
           const maxRightPosition = PAGE_WIDTH - (leftMargin + MINIMUM_SPACE);
           const newRightPosition = Math.max(PAGE_WIDTH - rawPosition, 0);
-          const constrainedRightPosition = Math.min(
-            newRightPosition,
-            maxRightPosition,
-          );
+          const constrainedRightPosition = Math.min(newRightPosition, maxRightPosition);
           setRightMargin(constrainedRightPosition);
         }
       }
@@ -93,11 +88,7 @@ export const Ruler = () => {
               const position = (marker * 816) / 82;
 
               return (
-                <div
-                  key={marker}
-                  className="absolute bottom-0"
-                  style={{ left: `${position}px` }}
-                >
+                <div key={marker} className="absolute bottom-0" style={{ left: `${position}px` }}>
                   {marker % 10 === 0 && (
                     <>
                       <div className="absolute bottom-0 w-[1px] h-2 bg-neutral-500" />
@@ -130,13 +121,7 @@ interface MarkerProps {
   onDoubleClick: () => void;
 }
 
-const Marker = ({
-  position,
-  isLeft,
-  isDragging,
-  onMouseDown,
-  onDoubleClick,
-}: MarkerProps) => {
+const Marker = ({ position, isLeft, isDragging, onMouseDown, onDoubleClick }: MarkerProps) => {
   return (
     <div
       className="absolute top-0 w-4 h-full cursor-ew-resize z-[5] group -ml-2"

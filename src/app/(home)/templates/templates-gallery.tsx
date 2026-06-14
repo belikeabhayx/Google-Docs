@@ -12,10 +12,9 @@ import {
 import { templates } from "@/constants/templates";
 import { useRouter } from "next/navigation";
 import { useMutation } from "convex/react";
-
+import { api } from "../../../../convex/_generated/api";  
 import { useState } from "react";
 import { toast } from "sonner";
-import { api } from "../../../../convex/_generated/api";
 
 export const TemplatesGallery = () => {
   const router = useRouter();
